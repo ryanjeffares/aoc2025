@@ -1,11 +1,9 @@
 use std::{env::args, time::Instant};
 
+use crate::{day1::Day1, day2::Day2};
+
 pub mod day1;
 pub mod day2;
-
-trait Puzzle {
-    fn solve(&self);
-}
 
 struct Timer {
     start: Instant,
@@ -26,8 +24,34 @@ impl Drop for Timer {
     }
 }
 
+trait Day {
+    fn solve(&self);
+}
+
+struct Solver {
+    day: Box<dyn Day>,
+}
+
+impl Solver {
+    fn new(day: impl Day + 'static) -> Self {
+        Self { day: Box::new(day) }
+    }
+
+    fn solve(&self) {
+        self.day.solve();
+    }
+}
+
 fn main() {
-    let days: Vec<Box<dyn Puzzle>> = vec![Box::new(day1::Day1 {}), Box::new(day2::Day2 {})];
-    let day = usize::from_str_radix(&args().nth(1).unwrap(), 10).unwrap();
-    days[day - 1].solve();
+    let days = vec![Solver::new(Day1 {}), Solver::new(Day2 {})];
+    args()
+        .nth(1)
+        .unwrap()
+        .split(',')
+        .map(|i| usize::from_str_radix(i, 10).unwrap())
+        .for_each(|day| {
+            println!("Day {day}");
+            days[day - 1].solve();
+            println!("===");
+        });
 }

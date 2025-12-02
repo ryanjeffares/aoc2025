@@ -1,8 +1,8 @@
-use crate::{Puzzle, Timer};
+use crate::{Day, Timer};
 
 pub struct Day2;
 
-impl Puzzle for Day2 {
+impl Day for Day2 {
     fn solve(&self) {
         let input = include_str!("../inputs/day2.txt");
 
@@ -24,7 +24,7 @@ impl Puzzle for Day2 {
                     .sum::<i64>()
                 })
                 .sum::<i64>();
-            println!("{sum}");
+            println!("Part 1: {sum}");
         }
 
         {
@@ -51,7 +51,7 @@ impl Puzzle for Day2 {
                     .sum::<i64>()
                 })
                 .sum::<i64>();
-            println!("{sum}");
+            println!("Part 2: {sum}");
         }
     }
 }
