@@ -8,27 +8,23 @@ impl Day for Day1 {
 
         {
             let _timer = Timer::new();
-            let mut dial = 50;
-
             let num_zeroes = input
                 .split('\n')
-                .filter(|line| {
-                    let line = line.trim();
+                .map(|line| line.trim())
+                .scan(50, |dial, line| {
                     let dir = line.as_bytes()[0];
                     let rot = i32::from_str_radix(&line[1..], 10).unwrap() % 100;
-
                     if dir == b'R' {
-                        dial = (dial + rot) % 100
+                        *dial = (*dial + rot) % 100;
                     } else {
-                        dial -= rot;
-
-                        if dial < 0 {
-                            dial = 100 + dial;
+                        *dial = *dial - rot;
+                        if *dial < 0 {
+                            *dial += 100;
                         }
                     }
-
-                    dial == 0
+                    Some(*dial)
                 })
+                .filter(|&num| num == 0)
                 .count();
 
             println!("Part 1: {num_zeroes}");
@@ -36,45 +32,47 @@ impl Day for Day1 {
 
         {
             let _timer = Timer::new();
-            let mut num_zeroes = 0;
-            let mut dial = 50;
+            let num_zeroes = input
+                .split('\n')
+                .map(|line| line.trim())
+                .scan(50, |dial, line| {
+                    let dir = line.as_bytes()[0];
+                    let rot = i32::from_str_radix(&line[1..], 10).unwrap();
+                    let num_zeroes = rot / 100;
+                    let rot = rot % 100;
+                    let is_zero = *dial == 0;
 
-            for line in input.split('\n') {
-                let line = line.trim();
-                let dir = line.as_bytes()[0];
-                let rot = i32::from_str_radix(&line[1..], 10).unwrap();
-                num_zeroes += rot / 100;
-                let rot = rot % 100;
-                let is_zero = dial == 0;
-
-                if dir == b'R' {
-                    dial += rot;
-
-                    if dial > 100 {
-                        if !is_zero {
-                            num_zeroes += 1;
+                    if dir == b'R' {
+                        *dial += rot;
+                        match *dial {
+                            d if d > 100 => {
+                                *dial -= 100;
+                                Some(num_zeroes + 1)
+                            }
+                            d if d == 100 => {
+                                *dial = 0;
+                                Some(num_zeroes + 1)
+                            }
+                            d if d == 0 => Some(num_zeroes + 1),
+                            _ => Some(num_zeroes),
                         }
-
-                        dial -= 100;
-                    } else if dial == 100 {
-                        dial = 0;
-                    }
-                } else {
-                    dial -= rot;
-
-                    if dial < 0 {
-                        if !is_zero {
-                            num_zeroes += 1;
+                    } else {
+                        *dial -= rot;
+                        match *dial {
+                            d if d < 0 => {
+                                *dial += 100;
+                                if is_zero {
+                                    Some(num_zeroes)
+                                } else {
+                                    Some(num_zeroes + 1)
+                                }
+                            }
+                            d if d == 0 => Some(num_zeroes + 1),
+                            _ => Some(num_zeroes),
                         }
-
-                        dial = 100 + dial;
                     }
-                }
-
-                if dial == 0 {
-                    num_zeroes += 1;
-                }
-            }
+                })
+                .sum::<i32>();
 
             println!("Part 2: {num_zeroes}");
         }
