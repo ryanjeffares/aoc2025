@@ -1,9 +1,10 @@
 use std::{env::args, time::Instant};
 
-use crate::{day1::Day1, day2::Day2};
+use crate::{day1::Day1, day2::Day2, day3::Day3};
 
 pub mod day1;
 pub mod day2;
+pub mod day3;
 
 struct Timer {
     start: Instant,
@@ -43,7 +44,11 @@ impl Solver {
 }
 
 fn main() {
-    let days = vec![Solver::new(Day1 {}), Solver::new(Day2 {})];
+    let days = vec![
+        Solver::new(Day1 {}),
+        Solver::new(Day2 {}),
+        Solver::new(Day3 {}),
+    ];
     args()
         .nth(1)
         .unwrap()
