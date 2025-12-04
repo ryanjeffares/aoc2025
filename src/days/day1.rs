@@ -4,7 +4,7 @@ pub struct Day1;
 
 impl Day for Day1 {
     fn solve(&self) {
-        let input = include_str!("../inputs/day1.txt");
+        let input = include_str!("../../inputs/day1.txt");
 
         {
             let _timer = Timer::new();
@@ -13,7 +13,7 @@ impl Day for Day1 {
                 .map(|line| line.trim())
                 .scan(50, |dial, line| {
                     let dir = line.as_bytes()[0];
-                    let rot = i32::from_str_radix(&line[1..], 10).unwrap() % 100;
+                    let rot = line[1..].parse::<i32>().unwrap() % 100;
                     if dir == b'R' {
                         *dial = (*dial + rot) % 100;
                     } else {
@@ -37,7 +37,7 @@ impl Day for Day1 {
                 .map(|line| line.trim())
                 .scan(50, |dial, line| {
                     let dir = line.as_bytes()[0];
-                    let rot = i32::from_str_radix(&line[1..], 10).unwrap();
+                    let rot: i32 = line[1..].parse().unwrap();
                     let num_zeroes = rot / 100;
                     let rot = rot % 100;
                     let is_zero = *dial == 0;

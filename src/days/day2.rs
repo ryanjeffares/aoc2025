@@ -4,15 +4,15 @@ pub struct Day2;
 
 impl Day for Day2 {
     fn solve(&self) {
-        let input = include_str!("../inputs/day2.txt");
+        let input = include_str!("../../inputs/day2.txt");
 
         {
             let _timer = Timer::new();
             let sum = input
                 .split(',')
                 .map(|pair| {
-                    i64::from_str_radix(pair.split('-').nth(0).unwrap(), 10).unwrap()
-                        ..=i64::from_str_radix(pair.split('-').nth(1).unwrap(), 10).unwrap()
+                    pair.split('-').nth(0).unwrap().parse::<i64>().unwrap()
+                        ..=pair.split('-').nth(1).unwrap().parse::<i64>().unwrap()
                 })
                 .map(|pair| {
                     pair.filter(|id| {
@@ -32,8 +32,8 @@ impl Day for Day2 {
             let sum = input
                 .split(',')
                 .map(|pair| {
-                    i64::from_str_radix(pair.split('-').nth(0).unwrap(), 10).unwrap()
-                        ..=i64::from_str_radix(pair.split('-').nth(1).unwrap(), 10).unwrap()
+                    pair.split('-').nth(0).unwrap().parse::<i64>().unwrap()
+                        ..=pair.split('-').nth(1).unwrap().parse::<i64>().unwrap()
                 })
                 .map(|pair| {
                     pair.filter(|id| {

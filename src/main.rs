@@ -1,10 +1,8 @@
 use std::{env::args, time::Instant};
 
-use crate::{day1::Day1, day2::Day2, day3::Day3};
+use crate::days::{day1::Day1, day2::Day2, day3::Day3, day4::Day4};
 
-pub mod day1;
-pub mod day2;
-pub mod day3;
+pub mod days;
 
 struct Timer {
     start: Instant,
@@ -48,12 +46,13 @@ fn main() {
         Solver::new(Day1 {}),
         Solver::new(Day2 {}),
         Solver::new(Day3 {}),
+        Solver::new(Day4 {}),
     ];
     args()
         .nth(1)
         .unwrap()
         .split(',')
-        .map(|i| usize::from_str_radix(i, 10).unwrap())
+        .map(|i| i.parse::<usize>().unwrap())
         .for_each(|day| {
             println!("Day {day}");
             days[day - 1].solve();

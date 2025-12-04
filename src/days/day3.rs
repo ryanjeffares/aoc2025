@@ -6,7 +6,7 @@ pub struct Day3;
 
 impl Day for Day3 {
     fn solve(&self) {
-        let input = include_str!("../inputs/day3.txt");
+        let input = include_str!("../../inputs/day3.txt");
 
         {
             let _timer = Timer::new();
