@@ -33,6 +33,10 @@ impl Day for Day5 {
                 .map(|line| line.trim().parse::<u64>().unwrap());
             let num_fresh_ids = ids
                 .filter(|id| {
+                    if id > &ranges.last().unwrap().1 {
+                        return false;
+                    }
+
                     for (a, b) in ranges.iter() {
                         if a > id {
                             return false;
@@ -43,7 +47,7 @@ impl Day for Day5 {
                         }
                     }
 
-                    false
+                    unreachable!()
                 })
                 .count();
 
@@ -52,8 +56,8 @@ impl Day for Day5 {
 
         {
             let _timer = Timer::new();
-            let mut cleaned_ranges: Vec<(u64, u64)> = Vec::<(u64, u64)>::new();
-            let (mut start, mut end) = ranges[0].clone();
+            let mut cleaned_ranges = Vec::<(u64, u64)>::new();
+            let (mut start, mut end) = ranges[0];
             for (a, b) in ranges.into_iter().skip(1) {
                 if a > start && a > end {
                     cleaned_ranges.push((start, end));
