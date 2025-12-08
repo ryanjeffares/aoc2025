@@ -2,7 +2,9 @@ use std::{env::args, time::Instant};
 
 use days::day6::Day6;
 
-use crate::days::{day1::Day1, day2::Day2, day3::Day3, day4::Day4, day5::Day5, day7::Day7};
+use crate::days::{
+    day1::Day1, day2::Day2, day3::Day3, day4::Day4, day5::Day5, day7::Day7, day8::Day8,
+};
 
 pub mod days;
 
@@ -44,7 +46,7 @@ impl Solver {
 }
 
 fn main() {
-    let days = vec![
+    let days = [
         Solver::new(Day1 {}),
         Solver::new(Day2 {}),
         Solver::new(Day3 {}),
@@ -52,6 +54,7 @@ fn main() {
         Solver::new(Day5 {}),
         Solver::new(Day6 {}),
         Solver::new(Day7 {}),
+        Solver::new(Day8 {}),
     ];
     args()
         .nth(1)
