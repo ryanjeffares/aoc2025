@@ -48,9 +48,9 @@ impl Day for Day6 {
             let row_len = char_map[0].len();
             let mut total = 0;
             let mut numbers = Vec::<u64>::new();
-            let mut op_index = ops.len() - 1;
+            let mut op_index = 0;
 
-            for column in (0..row_len).rev() {
+            for column in 0..row_len {
                 let result = char_map
                     .iter()
                     .map(|row| row[column])
@@ -69,15 +69,13 @@ impl Day for Day6 {
                         "+" => total += numbers.iter().sum::<u64>(),
                         _ => (),
                     }
-                    if op_index > 0 {
-                        op_index -= 1;
-                    }
+                    op_index += 1;
                     numbers.clear();
                 } else {
                     numbers.push(result);
                 }
 
-                if column == 0 {
+                if column == row_len - 1 {
                     match ops[op_index] {
                         "*" => total += numbers.iter().product::<u64>(),
                         "+" => total += numbers.iter().sum::<u64>(),
