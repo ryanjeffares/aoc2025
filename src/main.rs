@@ -3,7 +3,7 @@ use std::{env::args, time::Instant};
 use days::day6::Day6;
 
 use crate::days::{
-    day1::Day1, day2::Day2, day3::Day3, day4::Day4, day5::Day5, day7::Day7, day8::Day8,
+    day1::Day1, day2::Day2, day3::Day3, day4::Day4, day5::Day5, day7::Day7, day8::Day8, day9::Day9,
 };
 
 pub mod days;
@@ -55,6 +55,7 @@ fn main() {
         Solver::new(Day6 {}),
         Solver::new(Day7 {}),
         Solver::new(Day8 {}),
+        Solver::new(Day9 {}),
     ];
     args()
         .nth(1)
