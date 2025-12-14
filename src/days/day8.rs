@@ -48,7 +48,7 @@ impl Day for Day8 {
             .split('\n')
             .filter(|line| !line.is_empty())
             .map(|line| {
-                let mut split = line.split(',');
+                let mut split = line.trim().split(',');
                 (
                     split.next().unwrap().parse::<u64>().unwrap(),
                     split.next().unwrap().parse::<u64>().unwrap(),
